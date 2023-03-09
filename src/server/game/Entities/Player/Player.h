@@ -2584,6 +2584,12 @@ public:
     /*****************************************************************/
     /***                        NPCBOT SYSTEM                      ***/
     /*****************************************************************/
+
+    //--studio
+    uint8 GetMaxNpcBotsCount();
+    bool EnoughBot();
+    //--studio
+
     void SetBotMgr(BotMgr* mgr) { ASSERT (!_botMgr); _botMgr = mgr; }
     BotMgr* GetBotMgr() const { return _botMgr; }
     bool HaveBot() const;

@@ -76,7 +76,9 @@ public:
                 {
                     gossipTextId = GOSSIP_BOTGIVER_HIRE;
 
-                    if (player->GetNpcBotsCount() >= BotMgr::GetMaxNpcBots())
+                    //studio
+                    //if (player->GetNpcBotsCount() >= BotMgr::GetMaxNpcBots())
+                    if(player->EnoughBot())
                     {
                         WhisperTo(player, me, bot_ai::LocalizedNpcText(player, BOT_TEXT_BOTGIVER_TOO_MANY_BOTS).c_str());
                         break;

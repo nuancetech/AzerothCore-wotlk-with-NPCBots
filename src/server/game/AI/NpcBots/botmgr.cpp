@@ -1145,10 +1145,12 @@ BotAddResult BotMgr::AddBot(Creature* bot)
         ch.PSendSysMessage(bot_ai::LocalizedNpcText(GetOwner(), BOT_TEXT_BOTADDFAIL_TELEPORTED).c_str(), bot->GetName().c_str());
         return BOT_ADD_BUSY;
     }
-    if (!owned && owned_count >= GetMaxNpcBots())
+    //studio
+    //if (!owned && owned_count >= GetMaxNpcBots())
+    if (!owned && _owner->EnoughBot())
     {
         ChatHandler ch(_owner->GetSession());
-        ch.PSendSysMessage(bot_ai::LocalizedNpcText(GetOwner(), BOT_TEXT_HIREFAIL_MAXBOTS).c_str(), GetMaxNpcBots());
+        ch.PSendSysMessage(bot_ai::LocalizedNpcText(GetOwner(), BOT_TEXT_HIREFAIL_MAXBOTS).c_str(), _owner->GetMaxNpcBotsCount());
         return BOT_ADD_MAX_EXCEED;
     }
     if (!owned && _maxClassNpcBots && class_count >= _maxClassNpcBots)

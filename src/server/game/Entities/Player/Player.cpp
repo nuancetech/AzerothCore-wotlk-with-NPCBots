@@ -1753,6 +1753,36 @@ void Player::RemoveFromWorld()
 }
 
 //NPCBOT
+//studio----------------
+//获得玩家最多能获得多少机器人
+uint8 Player::GetMaxNpcBotsCount()
+{
+    uint32 level = GetLevel();
+
+    if (level < 40) return 1;
+    if (level < 80) return 2;
+    if (level >= 80) return 3;
+
+    return 1;
+
+    //QueryResult result = CharacterDatabase.Query("select maxCount from studio_characters_npcbot_config WHERE guid={}", GetGUID().GetCounter());
+    //if (result)
+    //{
+    //    return (*result)[0].Get<uint32>();
+    //}
+
+    //CharacterDatabase.Execute("insert into studio_characters_npcbot_config values({},1)", GetGUID().GetCounter());
+    ////初次判断，初始化配置
+    ////默认只能有1个机器人
+    //return 1;
+}
+
+bool Player::EnoughBot()
+{
+    return GetNpcBotsCount() >= GetMaxNpcBotsCount();
+}
+//studio----------------
+
 bool Player::HaveBot() const
 {
     return _botMgr && _botMgr->HaveBot();
