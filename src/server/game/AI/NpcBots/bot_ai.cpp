@@ -33,6 +33,7 @@
 #include "TemporarySummon.h"
 #include "Transport.h"
 #include "World.h"
+#include <map>
 /*
 NpcBot System by Trickerer (https://github.com/trickerer/Trinity-Bots; onlysuffering@gmail.com)
 Version 5.2.77a
@@ -9142,13 +9143,13 @@ bool bot_ai::OnGossipSelect(Player* player, Creature* creature/* == me*/, uint32
             subMenu = true;
 
             if (GetDamagingSpellsList())
-                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_DAMAGE) + "...", GOSSIP_SENDER_ABILITIES_USAGE_LIST_DAMAGE, GOSSIP_ACTION_INFO_DEF + 1);
+                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_DAMAGE) , GOSSIP_SENDER_ABILITIES_USAGE_LIST_DAMAGE, GOSSIP_ACTION_INFO_DEF + 1);
             if (GetCCSpellsList())
-                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_CONTROL) + "...", GOSSIP_SENDER_ABILITIES_USAGE_LIST_CC, GOSSIP_ACTION_INFO_DEF + 2);
+                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_CONTROL) , GOSSIP_SENDER_ABILITIES_USAGE_LIST_CC, GOSSIP_ACTION_INFO_DEF + 2);
             if (GetHealingSpellsList())
-                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_HEAL) + "...", GOSSIP_SENDER_ABILITIES_USAGE_LIST_HEAL, GOSSIP_ACTION_INFO_DEF + 3);
+                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_HEAL) , GOSSIP_SENDER_ABILITIES_USAGE_LIST_HEAL, GOSSIP_ACTION_INFO_DEF + 3);
             if (GetSupportSpellsList())
-                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_OTHER) + "...", GOSSIP_SENDER_ABILITIES_USAGE_LIST_SUPPORT, GOSSIP_ACTION_INFO_DEF + 4);
+                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_OTHER), GOSSIP_SENDER_ABILITIES_USAGE_LIST_SUPPORT, GOSSIP_ACTION_INFO_DEF + 4);
 
             AddGossipItemFor(player, GOSSIP_ICON_CHAT, LocalizedNpcText(player, BOT_TEXT_BACK), GOSSIP_SENDER_ABILITIES, GOSSIP_ACTION_INFO_DEF + 5);
             break;
@@ -9577,8 +9578,8 @@ bool bot_ai::OnGossipSelect(Player* player, Creature* creature/* == me*/, uint32
             {
                 AddGossipItemFor(player, !player->GetBotMgr()->GetBotAllowCombatPositioning() ? GOSSIP_ICON_BATTLE : GOSSIP_ICON_CHAT,
                     LocalizedNpcText(player, BOT_TEXT_DISABLE_COMBAT_POSITIONING), GOSSIP_SENDER_FORMATION_TOGGLE_COMBAT_POSITIONING, GOSSIP_ACTION_INFO_DEF + 2);
-                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_ATTACK_DISTANCE) + "...", GOSSIP_SENDER_FORMATION_ATTACK_DISTANCE, GOSSIP_ACTION_INFO_DEF + 3);
-                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_ATTACK_ANGLE) + "...", GOSSIP_SENDER_FORMATION_ATTACK_ANGLE, GOSSIP_ACTION_INFO_DEF + 4);
+                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_ATTACK_DISTANCE), GOSSIP_SENDER_FORMATION_ATTACK_DISTANCE, GOSSIP_ACTION_INFO_DEF + 3);
+                AddGossipItemFor(player, GOSSIP_ICON_TALK, LocalizedNpcText(player, BOT_TEXT_ATTACK_ANGLE), GOSSIP_SENDER_FORMATION_ATTACK_ANGLE, GOSSIP_ACTION_INFO_DEF + 4);
             }
 
             if (!HasRole(BOT_ROLE_TANK) && HasRole(BOT_ROLE_DPS | BOT_ROLE_HEAL))
@@ -14398,30 +14399,44 @@ void bot_ai::_AddWeaponSkillLink(Player const* forPlayer, SpellInfo const* spell
     uint32 loc = forPlayer->GetSession()->GetSessionDbcLocale();
     str << "|cff00ffff|Hspell:" << spellInfo->Id << "|h[" << spellInfo->SpellName[loc] << " : " << master->GetSkillValue(skillid) << " /" << master->GetMaxSkillValue(skillid) << "]|h|r";
 }
+
+static const std::map<std::string, std::string> SpellNames = {
+        { "Corruption", "腐蚀术" }
+};
+
 //|cff71d5ff|Hspell:21563|h[Command]|h|r
 void bot_ai::_AddSpellLink(Player const* forPlayer, SpellInfo const* spellInfo, std::ostringstream &str, bool color/* = true*/) const
 {
     uint32 loc = forPlayer->GetSession()->GetSessionDbcLocale();
-    str << "|c";
+    //studio 移除颜色，颜色不好看
+    //str << "|c";
 
-    if (color)
-    {
-        switch (GetFirstSchoolInMask(spellInfo->GetSchoolMask()))
-        {
-            case SPELL_SCHOOL_NORMAL:       str << "ffffff00"; break; //YELLOW
-            case SPELL_SCHOOL_HOLY:         str << "ffffe680"; break; //LIGHT YELLOW
-            case SPELL_SCHOOL_FIRE:         str << "ffff8000"; break; //ORANGE
-            case SPELL_SCHOOL_NATURE:       str << "ff4dff4d"; break; //GREEN
-            case SPELL_SCHOOL_FROST:        str << "ff80ffff"; break; //LIGHT BLUE
-            case SPELL_SCHOOL_SHADOW:       str << "ff8080ff"; break; //DARK BLUE
-            case SPELL_SCHOOL_ARCANE:       str << "ffff80ff"; break; //LIGHT PURPLE
-            default:                        str << "ffffffff"; break; //UNK WHITE
-        }
-    }
-    else
-        str << "ffffffff"; //default white
+    //if (color)
+    //{
+    //    switch (GetFirstSchoolInMask(spellInfo->GetSchoolMask()))
+    //    {
+    //        case SPELL_SCHOOL_NORMAL:       str << "ffffff00"; break; //YELLOW
+    //        case SPELL_SCHOOL_HOLY:         str << "ffffe680"; break; //LIGHT YELLOW
+    //        case SPELL_SCHOOL_FIRE:         str << "ffff8000"; break; //ORANGE
+    //        case SPELL_SCHOOL_NATURE:       str << "ff4dff4d"; break; //GREEN
+    //        case SPELL_SCHOOL_FROST:        str << "ff80ffff"; break; //LIGHT BLUE
+    //        case SPELL_SCHOOL_SHADOW:       str << "ff8080ff"; break; //DARK BLUE
+    //        case SPELL_SCHOOL_ARCANE:       str << "ffff80ff"; break; //LIGHT PURPLE
+    //        default:                        str << "ffffffff"; break; //UNK WHITE
+    //    }
+    //}
+    //else
+    //    str << "ffffffff"; //default white
 
-    str << "|Hspell:" << spellInfo->Id << "|h[" << spellInfo->SpellName[loc] << "]|h|r";
+    //str << "|Hspell:" << spellInfo->Id << "|h[" << spellInfo->SpellName[loc] << "]|h|r";
+
+    std::string name = spellInfo->SpellName[loc];
+
+    auto iter = SpellNames.find(name);
+    if (iter != SpellNames.end())
+        name = iter->second;
+
+    str << name;
 }
 //Unused
 void bot_ai::_AddProfessionLink(Player const* forPlayer, SpellInfo const* spellInfo, std::ostringstream &str, uint32 skillId) const
