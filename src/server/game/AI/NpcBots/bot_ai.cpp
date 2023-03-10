@@ -9868,7 +9868,7 @@ bool bot_ai::OnGossipSelect(Player* player, Creature* creature/* == me*/, uint32
         {
             subMenu = true;
             //AddGossipItemFor(player, GOSSIP_ICON_CHAT, "Fix not mounting/following", GOSSIP_SENDER_TROUBLESHOOTING_FIX, GOSSIP_ACTION_INFO_DEF + 1);
-            AddGossipItemFor(player, GOSSIP_ICON_CHAT, LocalizedNpcText(player, BOT_TEXT_REMOVE_BUFF) + "...", GOSSIP_SENDER_TROUBLESHOOTING_FIX, GOSSIP_ACTION_INFO_DEF + 2);
+            AddGossipItemFor(player, GOSSIP_ICON_CHAT, LocalizedNpcText(player, BOT_TEXT_REMOVE_BUFF) , GOSSIP_SENDER_TROUBLESHOOTING_FIX, GOSSIP_ACTION_INFO_DEF + 2);
             AddGossipItemFor(player, GOSSIP_ICON_CHAT, LocalizedNpcText(player, BOT_TEXT_FIX_POWER), GOSSIP_SENDER_TROUBLESHOOTING_FIX, GOSSIP_ACTION_INFO_DEF + 3);
             AddGossipItemFor(player, GOSSIP_ICON_CHAT, LocalizedNpcText(player, BOT_TEXT_BACK), 1, GOSSIP_ACTION_INFO_DEF + 4);
             break;
@@ -14392,7 +14392,70 @@ void bot_ai::_AddWeaponSkillLink(Player const* forPlayer, SpellInfo const* spell
 }
 
 static const std::map<std::string, std::string> SpellNames = {
-        { "Corruption", "腐蚀术" }
+{ "Corruption", "腐蚀术" },
+{ "Chaos Bolt", "混乱之箭" },
+{ "Conflagrate", "燃烧" },
+{ "Curse of Agony", "痛苦诅咒" },
+{ "Death Coil", "死亡缠绕" },
+{ "Siphon Life", "生命虹吸" },
+{ "Drain Soul", "吸取灵魂" },
+{ "Hellfire", "地狱烈焰" },
+{ "Immolate", "献祭" },
+{ "Incinerate", "烧尽" },
+{ "Rain of Fire", "火焰之雨" },
+{ "Searing Pain", "灼热之痛" },
+{ "Seed of Corruption", "腐蚀之种" },
+{ "Shadow Bolt", "暗影箭" },
+{ "Shadowburn", "暗影灼烧" },
+{ "Shadowflame", "暗影烈焰" },
+{ "Shadowfury", "暗影之怒" },
+{ "Soul Fire", "灵魂之火" },
+{ "Banish", "放逐术" },
+{ "Curse of Tongues", "语言诅咒" },
+{ "Death Coil", "死亡缠绕" },
+{ "Fear", "恐惧" },
+{ "Howl of Terror", "恐惧嚎叫" },
+{ "Shadowfury", "暗影之怒" },
+{ "Curse of Tongues", "语言诅咒" },
+{ "Curse of the Elements", "元素诅咒" },
+{ "Curse of Weakness", "虚弱诅咒" },
+{ "Dark Pact", "黑暗契约" },
+{ "Drain Mana", "吸取法力" },
+{ "Demon Skin", "恶魔皮肤" },
+{ "Demon Armor", "魔甲术" },
+{ "Detect Invisibility", "侦测隐形" },
+{ "Fel Armor", "邪甲术" },
+{ "Life Tap", "生命分流" },
+{ "Shadow Ward", "暗影防护结界" },
+{ "Soulshatter", "灵魂碎裂" },
+{ "Unending Breath", "魔息术" },
+{ "Imp", "小鬼" },
+{ "Voidwalk", "虚空行者" },
+{ "Succubus", "魅魔" },
+{ "Felhunter", "地狱犬" },
+{ "Death Coil", "死亡缠绕" },
+{ "Siphon Life", "生命虹吸" },
+{ "Drain Soul", "吸取灵魂" },
+{ "Hellfire", "地狱烈焰" },
+{ "Immolation Aura", "献祭光环" },
+{ "Corruption", "腐蚀术" },
+{ "Chaos Bolt", "混乱之箭" },
+{ "Conflagrate", "燃烧" },
+{ "Curse of Agony", "痛苦诅咒" },
+{ "Death Coil", "死亡缠绕" },
+{ "Siphon Life", "生命虹吸" },
+{ "Drain Soul", "吸取灵魂" },
+{ "Hellfire", "地狱烈焰" },
+{ "Immolation Aura", "献祭光环" },
+{ "Corruption", "腐蚀术" },
+{ "Chaos Bolt", "混乱之箭" },
+{ "Conflagrate", "燃烧" },
+{ "Curse of Agony", "痛苦诅咒" },
+{ "Death Coil", "死亡缠绕" },
+{ "Siphon Life", "生命虹吸" },
+{ "Drain Soul", "吸取灵魂" },
+{ "Hellfire", "地狱烈焰" },
+{ "Immolation Aura", "献祭光环" },
 };
 
 //|cff71d5ff|Hspell:21563|h[Command]|h|r
