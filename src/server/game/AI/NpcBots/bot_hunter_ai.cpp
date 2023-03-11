@@ -2009,6 +2009,7 @@ public:
             myPet->SetByteValue(UNIT_FIELD_BYTES_2, 1, master->GetByteValue(UNIT_FIELD_BYTES_2, 1));
 
             //fix scale
+            //studio:改变了猎人NPC的宝宝模型都是原始比例
             switch (myPetType)
             {
                 case BOT_PET_RAVAGER:

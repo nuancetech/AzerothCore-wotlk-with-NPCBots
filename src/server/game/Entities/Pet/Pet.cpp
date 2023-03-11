@@ -1005,6 +1005,32 @@ bool Pet::CreateBaseAtTamed(CreatureTemplate const* cinfo, Map* map, uint32 phas
     return true;
 }
 
+//获得猎人捉宝宝时，宝宝成为怪的缩放值
+float GetOriginalObjectScale(CreatureTemplate const* creature)
+{
+    uint32 family = creature->family;
+    switch (family)
+    {
+    case CREATURE_FAMILY_CAT:
+        //狮子
+        return 1.4F;
+        case CREATURE_FAMILY_HYENA:
+            //土狼
+            return 1.15F;
+        case CREATURE_FAMILY_RAPTOR:
+            //迅猛龙
+            return 1.65f;
+        case CREATURE_FAMILY_TALLSTRIDER:
+            //陆行鸟
+            return 2.3f;
+        case CREATURE_FAMILY_MOTH:
+            //蛾
+            return 2.0f;
+    }
+
+    return 1.0f;
+}
+
 /// @todo: Move stat mods code to pet passive auras
 bool Guardian::InitStatsForLevel(uint8 petlevel)
 {
@@ -1078,8 +1104,19 @@ bool Guardian::InitStatsForLevel(uint8 petlevel)
 
     SetFloatValue(UNIT_MOD_CAST_SPEED, 1.0f);
 
-    // scale
-    SetObjectScale(GetNativeObjectScale());
+    //这是原始代码
+    //SetObjectScale(GetNativeObjectScale());
+
+    //studio:修正宠物大小
+    if (IsHunterPet())
+    {
+        SetObjectScale(GetOriginalObjectScale(GetCreatureTemplate()));
+    }
+    else
+    {
+        // scale
+        SetObjectScale(GetNativeObjectScale());
+    }
 
     // Resistance
     // xinef: hunter pets should not inherit template resistances

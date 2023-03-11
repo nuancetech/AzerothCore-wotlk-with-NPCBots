@@ -1777,6 +1777,7 @@ uint8 Player::GetMaxNpcBotsCount()
     //return 1;
 }
 
+//小伙伴数量是否达到上线
 bool Player::EnoughBot()
 {
     return GetNpcBotsCount() >= GetMaxNpcBotsCount();
