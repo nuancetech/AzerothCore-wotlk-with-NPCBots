@@ -2470,12 +2470,10 @@ Player* Pet::GetOwner() const
 
 float Pet::GetNativeObjectScale() const
 {
-    //CreatureFamilyEntry const* creatureFamily = sCreatureFamilyStore.LookupEntry(GetCreatureTemplate()->family);
-    //if (creatureFamily && creatureFamily->minScale > 0.0f && getPetType() == HUNTER_PET)
-    if (getPetType() == HUNTER_PET)
+    CreatureFamilyEntry const* creatureFamily = sCreatureFamilyStore.LookupEntry(GetCreatureTemplate()->family);
+    if (creatureFamily && creatureFamily->minScale > 0.0f && getPetType() == HUNTER_PET)
     {
-        return GetMaxObjectScale(GetCreatureTemplate(), GetNativeDisplayId());
-       /* float scale;
+        float scale;
         if (GetLevel() >= creatureFamily->maxScaleLevel)
             scale = creatureFamily->maxScale;
         else if (GetLevel() <= creatureFamily->minScaleLevel)
@@ -2487,7 +2485,7 @@ float Pet::GetNativeObjectScale() const
             if (displayInfo->scale > 1.f && GetCreatureTemplate()->IsExotic())
                 scale *= displayInfo->scale;
 
-        return scale;*/
+        return scale;
     }
 
     return Guardian::GetNativeObjectScale();
