@@ -1006,29 +1006,22 @@ bool Pet::CreateBaseAtTamed(CreatureTemplate const* cinfo, Map* map, uint32 phas
 }
 
 //获得猎人捉宝宝时，宝宝成为怪的缩放值
-float GetOriginalObjectScale(CreatureTemplate const* creature)
+float GetMaxObjectScale(CreatureTemplate const* creature,uint32 displayId)
 {
-    uint32 family = creature->family;
-    switch (family)
-    {
-    case CREATURE_FAMILY_CAT:
-        //狮子
-        return 1.4F;
-        case CREATURE_FAMILY_HYENA:
-            //土狼
-            return 1.15F;
-        case CREATURE_FAMILY_RAPTOR:
-            //迅猛龙
-            return 1.65f;
-        case CREATURE_FAMILY_TALLSTRIDER:
-            //陆行鸟
-            return 2.3f;
-        case CREATURE_FAMILY_MOTH:
-            //蛾
-            return 2.0f;
-    }
+    //可以通过修改dbc CreatureFamily，和宝宝自身的displayInfo->scale，来最终决定最小级别多大，最大级多大
+    //目前统一最大级别的大小
 
-    return 1.0f;
+    //如果dbc里的数值大，就用dbc的，否则用生物模板表里的缩放
+    float creature_scale = creature->scale;
+
+    float dbc_displayInfo_scale = 0;
+
+
+   CreatureFamilyEntry const* creatureFamily = sCreatureFamilyStore.LookupEntry(creature->family);
+   if (CreatureDisplayInfoEntry const* displayInfo = sCreatureDisplayInfoStore.LookupEntry(displayId))
+       dbc_displayInfo_scale = displayInfo->scale;
+
+   return dbc_displayInfo_scale > creature_scale ? dbc_displayInfo_scale : creature_scale;
 }
 
 /// @todo: Move stat mods code to pet passive auras
@@ -1105,18 +1098,18 @@ bool Guardian::InitStatsForLevel(uint8 petlevel)
     SetFloatValue(UNIT_MOD_CAST_SPEED, 1.0f);
 
     //这是原始代码
-    //SetObjectScale(GetNativeObjectScale());
+    SetObjectScale(GetNativeObjectScale());
 
     //studio:修正宠物大小
-    if (IsHunterPet())
-    {
-        SetObjectScale(GetOriginalObjectScale(GetCreatureTemplate()));
-    }
-    else
-    {
-        // scale
-        SetObjectScale(GetNativeObjectScale());
-    }
+    //if (IsHunterPet())
+    //{
+    //    SetObjectScale(GetOriginalObjectScale(GetCreatureTemplate(), GetNativeDisplayId()));
+    //}
+    //else
+    //{
+    //    // scale
+    //    SetObjectScale(GetNativeObjectScale());
+    //}
 
     // Resistance
     // xinef: hunter pets should not inherit template resistances
@@ -2477,10 +2470,12 @@ Player* Pet::GetOwner() const
 
 float Pet::GetNativeObjectScale() const
 {
-    CreatureFamilyEntry const* creatureFamily = sCreatureFamilyStore.LookupEntry(GetCreatureTemplate()->family);
-    if (creatureFamily && creatureFamily->minScale > 0.0f && getPetType() == HUNTER_PET)
+    //CreatureFamilyEntry const* creatureFamily = sCreatureFamilyStore.LookupEntry(GetCreatureTemplate()->family);
+    //if (creatureFamily && creatureFamily->minScale > 0.0f && getPetType() == HUNTER_PET)
+    if (getPetType() == HUNTER_PET)
     {
-        float scale;
+        return GetMaxObjectScale(GetCreatureTemplate(), GetNativeDisplayId());
+       /* float scale;
         if (GetLevel() >= creatureFamily->maxScaleLevel)
             scale = creatureFamily->maxScale;
         else if (GetLevel() <= creatureFamily->minScaleLevel)
@@ -2492,7 +2487,7 @@ float Pet::GetNativeObjectScale() const
             if (displayInfo->scale > 1.f && GetCreatureTemplate()->IsExotic())
                 scale *= displayInfo->scale;
 
-        return scale;
+        return scale;*/
     }
 
     return Guardian::GetNativeObjectScale();
