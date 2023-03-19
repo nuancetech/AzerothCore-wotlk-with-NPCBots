@@ -1759,11 +1759,12 @@ uint8 Player::GetMaxNpcBotsCount()
 {
     uint32 level = GetLevel();
 
-    if (level < 40) return 1;
-    if (level < 80) return 2;
-    if (level >= 80) return 3;
+    if (level < 10) return 1;  //10级以下1个
+    if (level < 30) return 2;  //10-29级2个 
+    if (level < 70) return 3;  //30-69级3个 
 
-    return 1;
+    //70级以上4个
+    return 4;
 
     //QueryResult result = CharacterDatabase.Query("select maxCount from studio_characters_npcbot_config WHERE guid={}", GetGUID().GetCounter());
     //if (result)
