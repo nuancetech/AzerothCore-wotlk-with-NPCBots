@@ -21,6 +21,9 @@
 /.env*
 /apps/joiner
 /deps/deno
+/data/sql/custom/*
+/src/server/scripts/Custom/*
+!/src/server/scripts/Custom/README.md
 
 /docker-compose.override.yml
 
@@ -94,3 +97,6 @@ local.properties
 !modules
 !/src/server/game/util
 modules/mod-eluna
+
+#NPCBots
+!/data/sql/custom/db_world/
