@@ -14492,7 +14492,32 @@ static const std::map<std::string, std::string> SpellNames = {
 { "Readiness", "准备就绪" },
 { "Scorpid Sting", "毒蝎钉刺" },
 { "Tranquilizing Shot", "宁神射击" },
-{ "Viper Sting", "蝰蛇钉刺" }
+{ "Viper Sting", "蝰蛇钉刺" },
+
+{ "Rune Tap", "符文分流" },
+{ "Path of Frost", "冰霜之路" },
+{ "Horn of winter", "寒冬号角" },
+{ "Empower Rune Weapon", "符文武器增效" },
+{ "Lichborne", "巫妖之躯" },
+{ "Bone Shield", "白骨之盾" },
+{ "Blood Boil", "血液沸腾" },
+{ "Blood Strike", "鲜血打击" },
+{ "Death and Decay", "枯萎凋零" },
+{ "Icy Touch", "冰冷触摸" },
+{ "Obliterate", "湮灭" },
+{ "Pestilence", "疫病" },
+{ "Plague Strike", "暗影打击" },
+{ "Rune Strike", "符文打击" },
+{ "Scourge Strike", "天灾打击" },
+{ "Death Grip", "死亡之握" },
+{ "Chains of Ice", "寒冰锁链" },
+{ "Mind Freeze", "心灵冰冻" },
+{ "Strangulate", "绞袭" },
+{ "Anti-Magic Shell", "反魔法护罩" },
+{ "Army of the Dead", "亡者大军" },
+{ "Blood Tap", "活力分流" },
+{ "Dark Command", "黑暗命令" },
+{ "Icebound Fortitude", "冰封之韧" }
 };
 
 //|cff71d5ff|Hspell:21563|h[Command]|h|r
