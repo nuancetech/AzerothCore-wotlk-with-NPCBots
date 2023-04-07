@@ -7914,6 +7914,14 @@ void Player::SendLoot(ObjectGuid guid, LootType loot_type)
             if (GameObjectTemplateAddon const* addon = go->GetTemplateAddon())
                 loot->generateMoneyLoot(addon->mingold, addon->maxgold);
 
+            //npcbot: fill wandering bot kill reward
+            if (lootid)
+            {
+                if (go->GetEntry() == GO_BOT_MONEY_BAG)
+                    BotMgr::OnBotWandererKilled(go);
+            }
+            //end npcbot
+
             if (loot_type == LOOT_FISHING)
                 go->GetFishLoot(loot, this);
             else if (loot_type == LOOT_FISHING_JUNK)
@@ -12759,7 +12767,9 @@ bool Player::isHonorOrXPTarget(Unit* victim) const
 
     // Victim level less gray level
     if (v_level <= k_grey)
+    {
         return false;
+    }
 
     if (victim->GetTypeId() == TYPEID_UNIT)
     {
@@ -12768,11 +12778,12 @@ bool Player::isHonorOrXPTarget(Unit* victim) const
             return true;
         //end npcbots
 
-        if (victim->IsTotem() ||
-                victim->IsPet() ||
-                victim->ToCreature()->GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_NO_XP)
+        if (victim->IsTotem() || victim->IsCritter() || victim->IsPet() || (victim->ToCreature()->GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_NO_XP))
+        {
             return false;
+        }
     }
+
     return true;
 }
 
